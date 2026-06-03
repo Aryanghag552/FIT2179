@@ -1,0 +1,100 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Coral Bleaching Survey Sites Across the Great Barrier Reef",
+        "subtitle": "Each circle represents a survey observation. Larger circles indicate more severe bleaching.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 500,
+    "height": 700,
+    "projection": {
+        "type": "mercator",
+        "center": [150, -18],
+        "scale": 2500
+    },
+    "layer": [
+        {
+            "data": {
+                "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/7_others/oceans.topojson",
+                "format": {"type": "topojson", "feature": "oceans"}
+            },
+            "mark": {"type": "geoshape", "fill": "#d4eef7", "stroke": null}
+        },
+        {
+            "data": {
+                "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
+                "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+            },
+            "mark": {"type": "geoshape", "fill": "#e8e4df", "stroke": "#bdbdbd", "strokeWidth": 0.5}
+        },
+        {
+            "data": {
+                "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_graticules_5.topojson",
+                "format": {"type": "topojson", "feature": "ne_110m_graticules_5"}
+            },
+            "mark": {"type": "geoshape", "fill": null, "stroke": "#c9d6de", "strokeWidth": 0.3}
+        },
+        {
+            "data": {
+                "url": "data/gbr_bleaching.csv"
+            },
+            "params": [
+                {
+                    "name": "region_select",
+                    "select": {"type": "point", "fields": ["GBR_Region"]},
+                    "bind": "legend"
+                }
+            ],
+            "mark": {
+                "type": "circle",
+                "opacity": 0.6,
+                "stroke": "#333",
+                "strokeWidth": 0.3
+            },
+            "encoding": {
+                "longitude": {"field": "Longitude_Degrees", "type": "quantitative"},
+                "latitude": {"field": "Latitude_Degrees", "type": "quantitative"},
+                "size": {
+                    "field": "Percent_Bleaching",
+                    "type": "quantitative",
+                    "title": "Bleaching (%)",
+                    "scale": {"range": [10, 400]},
+                    "legend": {"orient": "bottom-left"}
+                },
+                "color": {
+                    "field": "GBR_Region",
+                    "type": "nominal",
+                    "title": "GBR Region",
+                    "scale": {
+                        "domain": ["Northern", "Central", "Southern"],
+                        "range": ["#e74c3c", "#f39c12", "#2980b9"]
+                    },
+                    "legend": {"orient": "bottom-left"}
+                },
+                "opacity": {
+                    "condition": {"param": "region_select", "value": 0.6},
+                    "value": 0.1
+                },
+                "tooltip": [
+                    {"field": "Site_Name", "type": "nominal", "title": "Site"},
+                    {"field": "GBR_Region", "type": "nominal", "title": "Region"},
+                    {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+                    {"field": "Date_Month", "type": "ordinal", "title": "Month"},
+                    {"field": "Percent_Bleaching", "type": "quantitative", "title": "Bleaching %", "format": ".1f"},
+                    {"field": "SSTA", "type": "quantitative", "title": "SST Anomaly (°C)", "format": ".2f"},
+                    {"field": "Depth_m", "type": "quantitative", "title": "Depth (m)"}
+                ]
+            }
+        }
+    ],
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

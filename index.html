@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Vega-Lite -->
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+    <script src="js/vega_lite_vis.js"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>The Great Barrier Reef: A Story of Coral Under Pressure</title>
+</head>
+<body>
+
+    <!-- ==================== HERO / TITLE SECTION ==================== -->
+    <div class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">The Great Barrier Reef</h1>
+            <p class="hero-subtitle">A Story of Coral Under Pressure</p>
+            <p class="hero-description">
+                The Great Barrier Reef stretches over 2,300 km along Australia's northeast coast — 
+                the world's largest living structure. But rising ocean temperatures have triggered 
+                <span class="highlight-bleaching">mass bleaching events</span> at an alarming rate, 
+                threatening one of Earth's most vital ecosystems.
+            </p>
+        </div>
+    </div>
+
+    <div class="page-container">
+
+        <!-- ==================== SECTION 1: THE REEF LANDSCAPE ==================== -->
+        <div class="section">
+            <h2 class="section-title">1. Australia's Reef Landscape</h2>
+            <p class="section-text">
+                The Great Barrier Reef Marine Park spans three distinct regions — 
+                <span class="region-north">Northern</span>, 
+                <span class="region-central">Central</span>, and 
+                <span class="region-south">Southern</span> — each with unique coral communities 
+                and varying exposure to environmental stressors. The map below shows the locations 
+                where coral bleaching has been observed and measured since the early 1990s.
+            </p>
+
+            <!-- Chart 1: Symbol Map of bleaching sites -->
+            <div class="chart-container full-width">
+                <div id="symbol_map" class="chart"></div>
+                <p class="chart-annotation">Each circle represents a survey site. Size indicates the severity of bleaching observed. Data from BCO-DMO Global Coral Bleaching Database.</p>
+            </div>
+
+            <!-- Chart 2: Choropleth / Proportional map by region -->
+            <div class="chart-container full-width">
+                <div id="choropleth_map" class="chart"></div>
+                <p class="chart-annotation">Bleaching severity varies significantly across the three GBR regions, with the Northern region experiencing the most severe impacts in recent events.</p>
+            </div>
+        </div>
+
+        <!-- ==================== SECTION 2: THE CLIMATE CONNECTION ==================== -->
+        <div class="section">
+            <h2 class="section-title">2. The Climate Connection</h2>
+            <p class="section-text">
+                Coral bleaching is triggered when ocean temperatures rise above the threshold corals 
+                can tolerate. The relationship between <span class="highlight-temp">sea surface temperature anomalies</span> 
+                and bleaching events is unmistakable in the data.
+            </p>
+
+            <div class="chart-row">
+                <!-- Chart 3: Bubble plot (SST vs Bleaching) -->
+                <div class="chart-container half-width">
+                    <div id="bubble_plot" class="chart"></div>
+                    <p class="chart-annotation">Higher temperature anomalies are associated with more severe bleaching.</p>
+                </div>
+
+                <!-- Chart 4: Heatmap (Month x Year bleaching) -->
+                <div class="chart-container half-width">
+                    <div id="heatmap" class="chart"></div>
+                    <p class="chart-annotation">Bleaching peaks during the Southern Hemisphere summer months (January–March).</p>
+                </div>
+            </div>
+
+            <!-- Chart 5: Line chart with brushing (SST anomaly over time) -->
+            <div class="chart-container full-width">
+                <div id="line_brush" class="chart"></div>
+                <p class="chart-annotation">Use the lower chart to brush and select a time range. The upper chart will update to show detail for the selected period.</p>
+            </div>
+        </div>
+
+        <!-- ==================== SECTION 3: THE BLEACHING CRISIS ==================== -->
+        <div class="section">
+            <h2 class="section-title">3. The Bleaching Crisis</h2>
+            <p class="section-text">
+                Since 2016, the Great Barrier Reef has experienced 
+                <span class="highlight-bleaching">six mass bleaching events</span> — more than in the 
+                entire preceding century. The frequency and intensity of these events has accelerated 
+                dramatically, leaving less time for coral communities to recover between episodes.
+            </p>
+
+            <div class="chart-row">
+                <!-- Chart 6: Stacked area chart (bleaching by region over time) -->
+                <div class="chart-container half-width">
+                    <div id="stacked_area" class="chart"></div>
+                    <p class="chart-annotation">Click a region in the legend to highlight it. The stacking reveals how bleaching burden shifted between regions.</p>
+                </div>
+
+                <!-- Chart 7: Grouped bar chart (bleaching severity distribution) -->
+                <div class="chart-container half-width">
+                    <div id="grouped_bar" class="chart"></div>
+                    <p class="chart-annotation">Use the dropdown to filter by region or view all regions combined.</p>
+                </div>
+            </div>
+
+            <!-- Chart 8: Diverging bar chart (temperature anomaly by year) -->
+            <div class="chart-container full-width">
+                <div id="diverging_bar" class="chart"></div>
+                <p class="chart-annotation">Years with positive temperature anomalies (red) correspond closely with documented mass bleaching events.</p>
+            </div>
+        </div>
+
+        <!-- ==================== SECTION 4: RECOVERY AND OUTLOOK ==================== -->
+        <div class="section">
+            <h2 class="section-title">4. Recovery and Outlook</h2>
+            <p class="section-text">
+                Despite the devastating bleaching events, the reef has shown a remarkable capacity for 
+                recovery — when given enough time. Hard coral cover data from AIMS monitoring programs 
+                reveals cycles of <span class="highlight-recovery">decline and regrowth</span>, but the 
+                window for recovery is narrowing as bleaching events become more frequent.
+            </p>
+
+            <!-- Chart 9: Multi-line chart (coral cover over time by region) -->
+            <div class="chart-container full-width">
+                <div id="coral_cover_line" class="chart"></div>
+                <p class="chart-annotation">Hard coral cover percentage by GBR region from 1986 to 2025. Vertical bands indicate mass bleaching years. Data: AIMS Long-Term Monitoring Program.</p>
+            </div>
+
+            <div class="chart-row">
+                <!-- Chart 10: Radial/Donut chart (bleaching event frequency) -->
+                <div class="chart-container half-width">
+                    <div id="donut_chart" class="chart"></div>
+                    <p class="chart-annotation">The proportion of bleaching events has accelerated sharply in recent decades.</p>
+                </div>
+
+                <!-- Chart 11: Slope chart (before vs after comparison) -->
+                <div class="chart-container half-width">
+                    <div id="slope_chart" class="chart"></div>
+                    <p class="chart-annotation">Comparing coral cover before and after major bleaching events reveals the scale of impact across regions.</p>
+                </div>
+            </div>
+
+            <!-- Chart 12: Small multiples or connected scatter -->
+            <div class="chart-container full-width">
+                <div id="small_multiples" class="chart"></div>
+                <p class="chart-annotation">Each panel shows a different environmental driver of bleaching, highlighting how multiple stressors interact.</p>
+            </div>
+        </div>
+
+        <!-- ==================== FOOTER / METADATA ==================== -->
+        <div class="footer">
+            <h3>Data Sources</h3>
+            <p>
+                <strong>Dataset 1:</strong> van Woesik, R., Burkepile, D. (2022). 
+                <em>Bleaching and environmental data for global coral reef sites from 1980–2020.</em> 
+                Biological and Chemical Oceanography Data Management Office (BCO-DMO). 
+                <a href="https://www.bco-dmo.org/dataset/773466" target="_blank">https://www.bco-dmo.org/dataset/773466</a>
+            </p>
+            <p>
+                <strong>Dataset 2:</strong> Australian Institute of Marine Science (AIMS). 
+                <em>Long-Term Monitoring Program: Annual Summary Report of Coral Reef Condition.</em>
+                <a href="https://www.aims.gov.au/monitoring-great-barrier-reef" target="_blank">https://www.aims.gov.au/monitoring-great-barrier-reef</a>
+            </p>
+            <hr>
+            <p class="footer-meta">
+                Created by Aryan Ghag | StudentID: 34001506 | FIT2179 Data Visualisation | June 2026<br>
+                Generative AI (Claude) was used to assist with data sourcing, data preparation, and website design.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -10,7 +10,7 @@
         "subtitleColor": "#7f8c8d",
         "anchor": "start"
     },
-    "width": 420,
+    "width": 400,
     "height": 300,
     "data": {
         "url": "gbr_bleaching.csv"
@@ -47,7 +47,8 @@
             "scale": {
                 "domain": ["Northern", "Central", "Southern"],
                 "range": ["#e74c3c", "#f39c12", "#2980b9"]
-            }
+            },
+            "legend": {"orient": "bottom", "direction": "horizontal"}
         },
         "opacity": {
             "condition": {"param": "region_highlight", "value": 0.8},

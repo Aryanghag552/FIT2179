@@ -45,3 +45,27 @@ vegaEmbed("#diverging_bar", vg_8).then(function(result) {
     // Access the Vega view instance
     // (https://vega.github.io/vega/docs/api/view/) as result.view
 }).catch(console.error);
+
+var vg_9 = "coral_cover_line.vg.json";
+vegaEmbed("#coral_cover_line", vg_9).then(function(result) {
+    // Access the Vega view instance
+    // (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+var vg_10 = "donut_chart.vg.json";
+vegaEmbed("#donut_chart", vg_10).then(function(result) {
+    // Access the Vega view instance
+    // (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+var vg_11 = "slope_chart.vg.json";
+vegaEmbed("#slope_chart", vg_11).then(function(result) {
+    // Access the Vega view instance
+    // (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+var vg_12 = "small_multiples.vg.json";
+vegaEmbed("#small_multiples", vg_12).then(function(result) {
+    // Access the Vega view instance
+    // (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);

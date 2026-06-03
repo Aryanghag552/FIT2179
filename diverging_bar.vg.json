@@ -18,7 +18,11 @@
     "transform": [
         {"filter": "datum.SSTA != 'nd'"},
         {
-            "calculate": "datum.SSTA > 0 ? 'Above Average' : 'Below Average'",
+            "aggregate": [{"op": "mean", "field": "SSTA", "as": "Mean_SSTA"}],
+            "groupby": ["Date_Year"]
+        },
+        {
+            "calculate": "datum.Mean_SSTA > 0 ? 'Above Average' : 'Below Average'",
             "as": "Anomaly_Direction"
         }
     ],
@@ -31,8 +35,7 @@
             "axis": {"labelAngle": -45}
         },
         "y": {
-            "aggregate": "mean",
-            "field": "SSTA",
+            "field": "Mean_SSTA",
             "type": "quantitative",
             "title": "Mean SST Anomaly (°C)"
         },
@@ -47,8 +50,7 @@
         },
         "tooltip": [
             {"field": "Date_Year", "type": "ordinal", "title": "Year"},
-            {"aggregate": "mean", "field": "SSTA", "type": "quantitative", "title": "Mean SST Anomaly (°C)", "format": ".3f"},
-            {"aggregate": "mean", "field": "Percent_Bleaching", "type": "quantitative", "title": "Avg Bleaching %", "format": ".1f"}
+            {"field": "Mean_SSTA", "type": "quantitative", "title": "Mean SST Anomaly (°C)", "format": ".3f"}
         ]
     },
     "config": {

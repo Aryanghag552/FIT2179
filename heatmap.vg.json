@@ -2,7 +2,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
         "text": "Bleaching Intensity by Month and Year",
-        "subtitle": "Darker cells indicate higher average bleaching. Summer months (Jan-Mar) show the worst impacts.",
+        "subtitle": "Darker cells indicate higher average bleaching. Summer months show the worst impacts.",
         "fontSize": 16,
         "font": "Playfair Display",
         "subtitleFont": "Lato",
@@ -10,21 +10,30 @@
         "subtitleColor": "#7f8c8d",
         "anchor": "start"
     },
-    "width": 450,
-    "height": 350,
+    "width": 380,
+    "height": 320,
     "data": {
         "url": "gbr_bleaching.csv"
     },
     "transform": [
         {"filter": "datum.Date_Month != ''"},
-        {"filter": "datum.Percent_Bleaching != 'nd'"}
+        {"filter": "datum.Percent_Bleaching != 'nd'"},
+        {
+            "calculate": "datum.Date_Month == 1 ? 'Jan' : datum.Date_Month == 2 ? 'Feb' : datum.Date_Month == 3 ? 'Mar' : datum.Date_Month == 4 ? 'Apr' : datum.Date_Month == 5 ? 'May' : datum.Date_Month == 6 ? 'Jun' : datum.Date_Month == 7 ? 'Jul' : datum.Date_Month == 8 ? 'Aug' : datum.Date_Month == 9 ? 'Sep' : datum.Date_Month == 10 ? 'Oct' : datum.Date_Month == 11 ? 'Nov' : 'Dec'",
+            "as": "Month_Name"
+        },
+        {
+            "calculate": "datum.Date_Month",
+            "as": "Month_Order"
+        }
     ],
     "mark": "rect",
     "encoding": {
         "x": {
-            "field": "Date_Month",
+            "field": "Month_Name",
             "type": "ordinal",
-            "title": "Month"
+            "title": "Month",
+            "sort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
         },
         "y": {
             "field": "Date_Year",
@@ -36,11 +45,12 @@
             "field": "Percent_Bleaching",
             "type": "quantitative",
             "title": "Avg Bleaching %",
-            "scale": {"scheme": "orangered"}
+            "scale": {"scheme": "orangered"},
+            "legend": {"orient": "bottom", "direction": "horizontal"}
         },
         "tooltip": [
             {"field": "Date_Year", "type": "ordinal", "title": "Year"},
-            {"field": "Date_Month", "type": "ordinal", "title": "Month"},
+            {"field": "Month_Name", "type": "nominal", "title": "Month"},
             {"aggregate": "mean", "field": "Percent_Bleaching", "type": "quantitative", "title": "Avg Bleaching %", "format": ".1f"},
             {"aggregate": "count", "type": "quantitative", "title": "Observations"}
         ]

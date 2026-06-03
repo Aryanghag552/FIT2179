@@ -1,0 +1,75 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Sea Surface Temperature Anomaly vs Bleaching Severity",
+        "subtitle": "Each circle is a survey site. Higher temperature anomalies drive more severe bleaching.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 450,
+    "height": 350,
+    "data": {
+        "url": "gbr_bleaching.csv"
+    },
+    "transform": [
+        {"filter": "datum.Percent_Bleaching > 0"},
+        {"filter": "datum.SSTA != 'nd'"},
+        {"filter": "datum.Depth_m != 'nd'"}
+    ],
+    "params": [
+        {
+            "name": "region_select",
+            "select": {"type": "point", "fields": ["GBR_Region"]},
+            "bind": "legend"
+        }
+    ],
+    "mark": "circle",
+    "encoding": {
+        "x": {
+            "field": "SSTA",
+            "type": "quantitative",
+            "title": "Sea Surface Temperature Anomaly (°C)"
+        },
+        "y": {
+            "field": "Percent_Bleaching",
+            "type": "quantitative",
+            "title": "Bleaching (%)"
+        },
+        "size": {
+            "field": "Depth_m",
+            "type": "quantitative",
+            "title": "Depth (m)",
+            "scale": {"range": [20, 300]}
+        },
+        "color": {
+            "field": "GBR_Region",
+            "type": "nominal",
+            "title": "GBR Region",
+            "scale": {
+                "domain": ["Northern", "Central", "Southern"],
+                "range": ["#e74c3c", "#f39c12", "#2980b9"]
+            }
+        },
+        "opacity": {
+            "condition": {"param": "region_select", "value": 0.7},
+            "value": 0.1
+        },
+        "tooltip": [
+            {"field": "Site_Name", "type": "nominal", "title": "Site"},
+            {"field": "GBR_Region", "type": "nominal", "title": "Region"},
+            {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+            {"field": "SSTA", "type": "quantitative", "title": "SST Anomaly (°C)", "format": ".2f"},
+            {"field": "Percent_Bleaching", "type": "quantitative", "title": "Bleaching %", "format": ".1f"},
+            {"field": "Depth_m", "type": "quantitative", "title": "Depth (m)"}
+        ]
+    },
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

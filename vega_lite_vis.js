@@ -27,3 +27,21 @@ vegaEmbed("#line_brush", vg_5).then(function(result) {
     // Access the Vega view instance
     // (https://vega.github.io/vega/docs/api/view/) as result.view
 }).catch(console.error);
+
+var vg_6 = "stacked_area.vg.json";
+vegaEmbed("#stacked_area", vg_6).then(function(result) {
+    // Access the Vega view instance
+    // (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+var vg_7 = "grouped_bar.vg.json";
+vegaEmbed("#grouped_bar", vg_7).then(function(result) {
+    // Access the Vega view instance
+    // (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);
+
+var vg_8 = "diverging_bar.vg.json";
+vegaEmbed("#diverging_bar", vg_8).then(function(result) {
+    // Access the Vega view instance
+    // (https://vega.github.io/vega/docs/api/view/) as result.view
+}).catch(console.error);

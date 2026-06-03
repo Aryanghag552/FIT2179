@@ -10,8 +10,8 @@
         "subtitleColor": "#7f8c8d",
         "anchor": "start"
     },
-    "width": 450,
-    "height": 350,
+    "width": 400,
+    "height": 300,
     "data": {
         "url": "gbr_bleaching.csv"
     },

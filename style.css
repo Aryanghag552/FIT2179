@@ -141,7 +141,8 @@ body {
 
 /* ===== CHART LAYOUT ===== */
 .chart-container {
-    margin-bottom: 32px;
+    margin-bottom: 36px;
+    overflow: hidden;
 }
 
 .chart-container.full-width {
@@ -150,25 +151,30 @@ body {
 
 .chart-row {
     display: flex;
-    gap: 40px;
+    gap: 48px;
     flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 12px;
 }
 
 .chart-container.half-width {
     flex: 1;
-    min-width: 440px;
+    min-width: 420px;
+    max-width: 50%;
 }
 
 .chart {
     width: 100%;
+    overflow: visible;
 }
 
 .chart-annotation {
     font-size: 0.85rem;
     color: var(--text-light);
     font-style: italic;
-    margin-top: 8px;
+    margin-top: 10px;
     line-height: 1.5;
+    padding-right: 10px;
 }
 
 /* ===== FOOTER ===== */

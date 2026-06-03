@@ -41,7 +41,7 @@
         },
         {
             "data": {
-                "url": "data/gbr_bleaching.csv"
+                "url": "gbr_bleaching.csv"
             },
             "params": [
                 {

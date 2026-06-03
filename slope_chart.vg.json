@@ -1,0 +1,92 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Coral Cover: Before vs After Major Bleaching Events",
+        "subtitle": "Comparing coral cover in 1997 (pre-bleaching) vs 2019 (post-multiple events).",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 350,
+    "height": 350,
+    "data": {
+        "url": "gbr_coral_cover.csv"
+    },
+    "transform": [
+        {"filter": "datum.Year == 1997 || datum.Year == 2019"},
+        {"fold": ["Northern_Cover", "Central_Cover", "Southern_Cover"], "as": ["Region", "Cover"]},
+        {
+            "calculate": "datum.Region == 'Northern_Cover' ? 'Northern' : datum.Region == 'Central_Cover' ? 'Central' : 'Southern'",
+            "as": "Region_Name"
+        },
+        {
+            "calculate": "datum.Year == 1997 ? 'Before (1997)' : 'After (2019)'",
+            "as": "Period"
+        }
+    ],
+    "layer": [
+        {
+            "mark": {"type": "line", "strokeWidth": 2.5},
+            "encoding": {
+                "x": {
+                    "field": "Period",
+                    "type": "ordinal",
+                    "title": "",
+                    "sort": ["Before (1997)", "After (2019)"],
+                    "axis": {"labelFontSize": 13}
+                },
+                "y": {
+                    "field": "Cover",
+                    "type": "quantitative",
+                    "title": "Coral Cover (%)",
+                    "scale": {"domain": [0, 40]}
+                },
+                "color": {
+                    "field": "Region_Name",
+                    "type": "nominal",
+                    "title": "GBR Region",
+                    "scale": {
+                        "domain": ["Northern", "Central", "Southern"],
+                        "range": ["#e74c3c", "#f39c12", "#2980b9"]
+                    }
+                },
+                "detail": {"field": "Region_Name", "type": "nominal"}
+            }
+        },
+        {
+            "mark": {"type": "circle", "size": 100},
+            "encoding": {
+                "x": {
+                    "field": "Period",
+                    "type": "ordinal",
+                    "sort": ["Before (1997)", "After (2019)"]
+                },
+                "y": {
+                    "field": "Cover",
+                    "type": "quantitative"
+                },
+                "color": {
+                    "field": "Region_Name",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["Northern", "Central", "Southern"],
+                        "range": ["#e74c3c", "#f39c12", "#2980b9"]
+                    }
+                },
+                "tooltip": [
+                    {"field": "Region_Name", "type": "nominal", "title": "Region"},
+                    {"field": "Period", "type": "ordinal", "title": "Period"},
+                    {"field": "Cover", "type": "quantitative", "title": "Coral Cover %"}
+                ]
+            }
+        }
+    ],
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

@@ -1,0 +1,121 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Hard Coral Cover by GBR Region (1986–2025)",
+        "subtitle": "Dashed lines mark mass bleaching years. Data: AIMS Long-Term Monitoring Program.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 800,
+    "height": 350,
+    "layer": [
+        {
+            "data": {
+                "values": [
+                    {"Year": 1998, "label": "1998"},
+                    {"Year": 2002, "label": "2002"},
+                    {"Year": 2016, "label": "2016"},
+                    {"Year": 2017, "label": "2017"},
+                    {"Year": 2020, "label": "2020"},
+                    {"Year": 2022, "label": "2022"},
+                    {"Year": 2024, "label": "2024"}
+                ]
+            },
+            "mark": {"type": "rule", "strokeDash": [4, 4], "color": "#e74c3c", "opacity": 0.4},
+            "encoding": {
+                "x": {"field": "Year", "type": "quantitative"}
+            }
+        },
+        {
+            "data": {
+                "url": "gbr_coral_cover.csv"
+            },
+            "transform": [
+                {"fold": ["Northern_Cover", "Central_Cover", "Southern_Cover"], "as": ["Region", "Cover"]},
+                {
+                    "calculate": "datum.Region == 'Northern_Cover' ? 'Northern' : datum.Region == 'Central_Cover' ? 'Central' : 'Southern'",
+                    "as": "Region_Name"
+                }
+            ],
+            "params": [
+                {
+                    "name": "region_select",
+                    "select": {"type": "point", "fields": ["Region_Name"]},
+                    "bind": "legend"
+                }
+            ],
+            "mark": {"type": "line", "strokeWidth": 2.5},
+            "encoding": {
+                "x": {
+                    "field": "Year",
+                    "type": "quantitative",
+                    "title": "Year",
+                    "axis": {"format": "d"}
+                },
+                "y": {
+                    "field": "Cover",
+                    "type": "quantitative",
+                    "title": "Hard Coral Cover (%)"
+                },
+                "color": {
+                    "field": "Region_Name",
+                    "type": "nominal",
+                    "title": "GBR Region",
+                    "scale": {
+                        "domain": ["Northern", "Central", "Southern"],
+                        "range": ["#e74c3c", "#f39c12", "#2980b9"]
+                    }
+                },
+                "opacity": {
+                    "condition": {"param": "region_select", "value": 1},
+                    "value": 0.15
+                },
+                "tooltip": [
+                    {"field": "Region_Name", "type": "nominal", "title": "Region"},
+                    {"field": "Year", "type": "quantitative", "title": "Year"},
+                    {"field": "Cover", "type": "quantitative", "title": "Coral Cover %"}
+                ]
+            }
+        },
+        {
+            "data": {
+                "url": "gbr_coral_cover.csv"
+            },
+            "transform": [
+                {"fold": ["Northern_Cover", "Central_Cover", "Southern_Cover"], "as": ["Region", "Cover"]},
+                {
+                    "calculate": "datum.Region == 'Northern_Cover' ? 'Northern' : datum.Region == 'Central_Cover' ? 'Central' : 'Southern'",
+                    "as": "Region_Name"
+                }
+            ],
+            "mark": {"type": "circle", "size": 40},
+            "encoding": {
+                "x": {"field": "Year", "type": "quantitative"},
+                "y": {"field": "Cover", "type": "quantitative"},
+                "color": {
+                    "field": "Region_Name",
+                    "type": "nominal",
+                    "scale": {
+                        "domain": ["Northern", "Central", "Southern"],
+                        "range": ["#e74c3c", "#f39c12", "#2980b9"]
+                    }
+                },
+                "tooltip": [
+                    {"field": "Region_Name", "type": "nominal", "title": "Region"},
+                    {"field": "Year", "type": "quantitative", "title": "Year"},
+                    {"field": "Cover", "type": "quantitative", "title": "Coral Cover %"},
+                    {"field": "Major_Disturbance", "type": "nominal", "title": "Event"}
+                ]
+            }
+        }
+    ],
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

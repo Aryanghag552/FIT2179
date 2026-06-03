@@ -1,0 +1,66 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Environmental Drivers of Bleaching by Region",
+        "subtitle": "Each panel shows the relationship between temperature anomaly and bleaching for a different region.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "data": {
+        "url": "gbr_bleaching.csv"
+    },
+    "transform": [
+        {"filter": "datum.SSTA != 'nd'"},
+        {"filter": "datum.Percent_Bleaching != 'nd'"},
+        {"filter": "datum.Percent_Bleaching > 0"}
+    ],
+    "facet": {
+        "field": "GBR_Region",
+        "type": "nominal",
+        "title": "GBR Region",
+        "sort": ["Northern", "Central", "Southern"],
+        "columns": 3
+    },
+    "spec": {
+        "width": 250,
+        "height": 250,
+        "mark": {"type": "circle", "opacity": 0.6},
+        "encoding": {
+            "x": {
+                "field": "SSTA",
+                "type": "quantitative",
+                "title": "SST Anomaly (°C)"
+            },
+            "y": {
+                "field": "Percent_Bleaching",
+                "type": "quantitative",
+                "title": "Bleaching (%)"
+            },
+            "color": {
+                "field": "GBR_Region",
+                "type": "nominal",
+                "scale": {
+                    "domain": ["Northern", "Central", "Southern"],
+                    "range": ["#e74c3c", "#f39c12", "#2980b9"]
+                },
+                "legend": null
+            },
+            "size": {"value": 50},
+            "tooltip": [
+                {"field": "Site_Name", "type": "nominal", "title": "Site"},
+                {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+                {"field": "SSTA", "type": "quantitative", "title": "SST Anomaly (°C)", "format": ".2f"},
+                {"field": "Percent_Bleaching", "type": "quantitative", "title": "Bleaching %", "format": ".1f"}
+            ]
+        }
+    },
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

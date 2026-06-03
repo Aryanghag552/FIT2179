@@ -1,0 +1,70 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Bleaching Severity Distribution by Region",
+        "subtitle": "Use the dropdown to filter by region.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 420,
+    "height": 300,
+    "data": {
+        "url": "gbr_bleaching.csv"
+    },
+    "transform": [
+        {"filter": "datum.Percent_Bleaching != 'nd'"},
+        {
+            "calculate": "datum.Percent_Bleaching <= 10 ? '0-10%' : datum.Percent_Bleaching <= 25 ? '10-25%' : datum.Percent_Bleaching <= 50 ? '25-50%' : datum.Percent_Bleaching <= 75 ? '50-75%' : '75-100%'",
+            "as": "Severity_Category"
+        },
+        {"filter": "region_filter == 'All' || datum.GBR_Region == region_filter"}
+    ],
+    "params": [
+        {
+            "name": "region_filter",
+            "value": "All",
+            "bind": {
+                "input": "select",
+                "options": ["All", "Northern", "Central", "Southern"],
+                "name": "Select Region: "
+            }
+        }
+    ],
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "field": "Severity_Category",
+            "type": "ordinal",
+            "title": "Bleaching Severity",
+            "sort": ["0-10%", "10-25%", "25-50%", "50-75%", "75-100%"]
+        },
+        "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Observations"
+        },
+        "color": {
+            "field": "Severity_Category",
+            "type": "ordinal",
+            "title": "Severity",
+            "scale": {
+                "domain": ["0-10%", "10-25%", "25-50%", "50-75%", "75-100%"],
+                "range": ["#f9e79f", "#f5b041", "#e67e22", "#e74c3c", "#922b21"]
+            },
+            "sort": ["0-10%", "10-25%", "25-50%", "50-75%", "75-100%"]
+        },
+        "tooltip": [
+            {"field": "Severity_Category", "type": "ordinal", "title": "Severity"},
+            {"aggregate": "count", "type": "quantitative", "title": "Observations"}
+        ]
+    },
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

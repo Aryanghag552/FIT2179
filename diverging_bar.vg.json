@@ -1,0 +1,59 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Sea Surface Temperature Anomaly by Year",
+        "subtitle": "Red bars indicate warmer-than-average years. These align with mass bleaching events.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 800,
+    "height": 300,
+    "data": {
+        "url": "gbr_bleaching.csv"
+    },
+    "transform": [
+        {"filter": "datum.SSTA != 'nd'"},
+        {
+            "calculate": "datum.SSTA > 0 ? 'Above Average' : 'Below Average'",
+            "as": "Anomaly_Direction"
+        }
+    ],
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "field": "Date_Year",
+            "type": "ordinal",
+            "title": "Year",
+            "axis": {"labelAngle": -45}
+        },
+        "y": {
+            "aggregate": "mean",
+            "field": "SSTA",
+            "type": "quantitative",
+            "title": "Mean SST Anomaly (°C)"
+        },
+        "color": {
+            "field": "Anomaly_Direction",
+            "type": "nominal",
+            "title": "Temperature",
+            "scale": {
+                "domain": ["Above Average", "Below Average"],
+                "range": ["#e74c3c", "#2980b9"]
+            }
+        },
+        "tooltip": [
+            {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+            {"aggregate": "mean", "field": "SSTA", "type": "quantitative", "title": "Mean SST Anomaly (°C)", "format": ".3f"},
+            {"aggregate": "mean", "field": "Percent_Bleaching", "type": "quantitative", "title": "Avg Bleaching %", "format": ".1f"}
+        ]
+    },
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

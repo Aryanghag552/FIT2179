@@ -1,0 +1,63 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Bleaching Observations by Year Across GBR Regions",
+        "subtitle": "Number of bleaching survey observations recorded each year, coloured by region.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 800,
+    "height": 350,
+    "data": {
+        "url": "gbr_bleaching.csv"
+    },
+    "params": [
+        {
+            "name": "region_highlight",
+            "select": {"type": "point", "fields": ["GBR_Region"]},
+            "bind": "legend"
+        }
+    ],
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "field": "Date_Year",
+            "type": "ordinal",
+            "title": "Year",
+            "axis": {"labelAngle": -45}
+        },
+        "y": {
+            "aggregate": "count",
+            "type": "quantitative",
+            "title": "Number of Observations"
+        },
+        "color": {
+            "field": "GBR_Region",
+            "type": "nominal",
+            "title": "GBR Region",
+            "scale": {
+                "domain": ["Northern", "Central", "Southern"],
+                "range": ["#e74c3c", "#f39c12", "#2980b9"]
+            }
+        },
+        "opacity": {
+            "condition": {"param": "region_highlight", "value": 1},
+            "value": 0.2
+        },
+        "tooltip": [
+            {"field": "GBR_Region", "type": "nominal", "title": "Region"},
+            {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+            {"aggregate": "count", "type": "quantitative", "title": "Observations"},
+            {"aggregate": "mean", "field": "Percent_Bleaching", "type": "quantitative", "title": "Avg Bleaching %", "format": ".1f"}
+        ]
+    },
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

@@ -1,0 +1,94 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Average Bleaching and Temperature Anomaly Over Time",
+        "subtitle": "Brush the lower chart to zoom into a specific time period in the upper chart.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "data": {
+        "url": "gbr_bleaching.csv"
+    },
+    "transform": [
+        {"filter": "datum.SSTA != 'nd'"},
+        {"filter": "datum.Percent_Bleaching != 'nd'"}
+    ],
+    "vconcat": [
+        {
+            "width": 800,
+            "height": 250,
+            "encoding": {
+                "x": {
+                    "field": "Date_Year",
+                    "type": "ordinal",
+                    "title": "Year",
+                    "scale": {"domain": {"param": "brush"}}
+                }
+            },
+            "layer": [
+                {
+                    "mark": {"type": "line", "color": "#e55039", "strokeWidth": 2},
+                    "encoding": {
+                        "y": {
+                            "aggregate": "mean",
+                            "field": "Percent_Bleaching",
+                            "type": "quantitative",
+                            "title": "Avg Bleaching %"
+                        },
+                        "tooltip": [
+                            {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+                            {"aggregate": "mean", "field": "Percent_Bleaching", "type": "quantitative", "title": "Avg Bleaching %", "format": ".1f"}
+                        ]
+                    }
+                },
+                {
+                    "mark": {"type": "circle", "color": "#e55039", "size": 60},
+                    "encoding": {
+                        "y": {
+                            "aggregate": "mean",
+                            "field": "Percent_Bleaching",
+                            "type": "quantitative"
+                        },
+                        "tooltip": [
+                            {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+                            {"aggregate": "mean", "field": "Percent_Bleaching", "type": "quantitative", "title": "Avg Bleaching %", "format": ".1f"}
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "width": 800,
+            "height": 80,
+            "params": [
+                {
+                    "name": "brush",
+                    "select": {"type": "interval", "encodings": ["x"]}
+                }
+            ],
+            "mark": {"type": "area", "color": "#1a6985", "opacity": 0.6},
+            "encoding": {
+                "x": {
+                    "field": "Date_Year",
+                    "type": "ordinal",
+                    "title": "Drag to select a time range"
+                },
+                "y": {
+                    "aggregate": "mean",
+                    "field": "Percent_Bleaching",
+                    "type": "quantitative",
+                    "title": ""
+                }
+            }
+        }
+    ],
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc"
+    }
+}

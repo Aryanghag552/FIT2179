@@ -1,0 +1,54 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Bleaching Intensity by Month and Year",
+        "subtitle": "Darker cells indicate higher average bleaching. Summer months (Jan-Mar) show the worst impacts.",
+        "fontSize": 16,
+        "font": "Playfair Display",
+        "subtitleFont": "Lato",
+        "subtitleFontSize": 12,
+        "subtitleColor": "#7f8c8d",
+        "anchor": "start"
+    },
+    "width": 450,
+    "height": 350,
+    "data": {
+        "url": "gbr_bleaching.csv"
+    },
+    "transform": [
+        {"filter": "datum.Date_Month != ''"},
+        {"filter": "datum.Percent_Bleaching != 'nd'"}
+    ],
+    "mark": "rect",
+    "encoding": {
+        "x": {
+            "field": "Date_Month",
+            "type": "ordinal",
+            "title": "Month"
+        },
+        "y": {
+            "field": "Date_Year",
+            "type": "ordinal",
+            "title": "Year"
+        },
+        "color": {
+            "aggregate": "mean",
+            "field": "Percent_Bleaching",
+            "type": "quantitative",
+            "title": "Avg Bleaching %",
+            "scale": {"scheme": "orangered"}
+        },
+        "tooltip": [
+            {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+            {"field": "Date_Month", "type": "ordinal", "title": "Month"},
+            {"aggregate": "mean", "field": "Percent_Bleaching", "type": "quantitative", "title": "Avg Bleaching %", "format": ".1f"},
+            {"aggregate": "count", "type": "quantitative", "title": "Observations"}
+        ]
+    },
+    "config": {
+        "font": "Lato",
+        "view": {"stroke": null},
+        "background": "#fafbfc",
+        "axis": {"grid": false}
+    }
+}

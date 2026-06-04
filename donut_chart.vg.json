@@ -2,7 +2,7 @@
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "title": {
         "text": "Distribution of Bleaching Severity",
-        "subtitle": "Proportion of survey observations by severity category across all years.",
+        "subtitle": "Proportion of observations by severity category across all years.",
         "fontSize": 16,
         "font": "Playfair Display",
         "subtitleFont": "Lato",
@@ -10,8 +10,8 @@
         "subtitleColor": "#7f8c8d",
         "anchor": "start"
     },
-    "width": 350,
-    "height": 350,
+    "width": 300,
+    "height": 300,
     "data": {
         "url": "gbr_bleaching.csv"
     },
@@ -22,7 +22,7 @@
             "as": "Severity"
         }
     ],
-    "mark": {"type": "arc", "innerRadius": 70},
+    "mark": {"type": "arc", "innerRadius": 60},
     "encoding": {
         "theta": {
             "aggregate": "count",
@@ -36,7 +36,8 @@
                 "domain": ["Low (0-10%)", "Moderate (10-30%)", "High (30-60%)", "Severe (60-100%)"],
                 "range": ["#f9e79f", "#f5b041", "#e74c3c", "#922b21"]
             },
-            "sort": ["Low (0-10%)", "Moderate (10-30%)", "High (30-60%)", "Severe (60-100%)"]
+            "sort": ["Low (0-10%)", "Moderate (10-30%)", "High (30-60%)", "Severe (60-100%)"],
+            "legend": {"orient": "bottom", "direction": "horizontal", "columns": 2}
         },
         "tooltip": [
             {"field": "Severity", "type": "nominal", "title": "Severity"},

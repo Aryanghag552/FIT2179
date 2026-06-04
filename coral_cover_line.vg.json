@@ -81,6 +81,21 @@
                     {"field": "Major_Disturbance", "type": "nominal", "title": "Event"}
                 ]
             }
+        },
+        {
+            "data": {
+                "values": [
+                    {"Year": "1998", "Cover": 38, "label": "1998 bleaching"},
+                    {"Year": "2016", "Cover": 12, "label": "Back-to-back bleaching"},
+                    {"Year": "2022", "Cover": 38, "label": "Record recovery"}
+                ]
+            },
+            "mark": {"type": "text", "fontSize": 10, "fontWeight": "bold", "color": "#922b21", "dy": -12},
+            "encoding": {
+                "x": {"field": "Year", "type": "ordinal"},
+                "y": {"field": "Cover", "type": "quantitative"},
+                "text": {"field": "label", "type": "nominal"}
+            }
         }
     ],
     "config": {

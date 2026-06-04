@@ -12,47 +12,65 @@
     },
     "width": 800,
     "height": 300,
-    "data": {
-        "url": "gbr_bleaching.csv"
-    },
-    "transform": [
-        {"filter": "datum.SSTA != 'nd'"},
+    "layer": [
         {
-            "aggregate": [{"op": "mean", "field": "SSTA", "as": "Mean_SSTA"}],
-            "groupby": ["Date_Year"]
-        },
-        {
-            "calculate": "datum.Mean_SSTA > 0 ? 'Above Average' : 'Below Average'",
-            "as": "Anomaly_Direction"
-        }
-    ],
-    "mark": "bar",
-    "encoding": {
-        "x": {
-            "field": "Date_Year",
-            "type": "ordinal",
-            "title": "Year",
-            "axis": {"labelAngle": -45}
-        },
-        "y": {
-            "field": "Mean_SSTA",
-            "type": "quantitative",
-            "title": "Mean SST Anomaly (°C)"
-        },
-        "color": {
-            "field": "Anomaly_Direction",
-            "type": "nominal",
-            "title": "Temperature",
-            "scale": {
-                "domain": ["Above Average", "Below Average"],
-                "range": ["#e74c3c", "#2980b9"]
+            "data": {
+                "url": "gbr_bleaching.csv"
+            },
+            "transform": [
+                {"filter": "datum.SSTA != 'nd'"},
+                {
+                    "aggregate": [{"op": "mean", "field": "SSTA", "as": "Mean_SSTA"}],
+                    "groupby": ["Date_Year"]
+                },
+                {
+                    "calculate": "datum.Mean_SSTA > 0 ? 'Above Average' : 'Below Average'",
+                    "as": "Anomaly_Direction"
+                }
+            ],
+            "mark": "bar",
+            "encoding": {
+                "x": {
+                    "field": "Date_Year",
+                    "type": "ordinal",
+                    "title": "Year",
+                    "axis": {"labelAngle": -45}
+                },
+                "y": {
+                    "field": "Mean_SSTA",
+                    "type": "quantitative",
+                    "title": "Mean SST Anomaly (°C)"
+                },
+                "color": {
+                    "field": "Anomaly_Direction",
+                    "type": "nominal",
+                    "title": "Temperature",
+                    "scale": {
+                        "domain": ["Above Average", "Below Average"],
+                        "range": ["#e74c3c", "#2980b9"]
+                    }
+                },
+                "tooltip": [
+                    {"field": "Date_Year", "type": "ordinal", "title": "Year"},
+                    {"field": "Mean_SSTA", "type": "quantitative", "title": "Mean SST Anomaly (°C)", "format": ".3f"}
+                ]
             }
         },
-        "tooltip": [
-            {"field": "Date_Year", "type": "ordinal", "title": "Year"},
-            {"field": "Mean_SSTA", "type": "quantitative", "title": "Mean SST Anomaly (°C)", "format": ".3f"}
-        ]
-    },
+        {
+            "data": {
+                "values": [
+                    {"Date_Year": "1998", "Mean_SSTA": 0.92, "label": "1998 El Niño"},
+                    {"Date_Year": "2016", "Mean_SSTA": 0.75, "label": "2016 bleaching"}
+                ]
+            },
+            "mark": {"type": "text", "fontSize": 10, "fontWeight": "bold", "color": "#922b21", "dy": -10},
+            "encoding": {
+                "x": {"field": "Date_Year", "type": "ordinal"},
+                "y": {"field": "Mean_SSTA", "type": "quantitative"},
+                "text": {"field": "label", "type": "nominal"}
+            }
+        }
+    ],
     "config": {
         "font": "Lato",
         "view": {"stroke": null},
